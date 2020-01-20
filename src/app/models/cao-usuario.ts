@@ -1,0 +1,32 @@
+export interface CaoUsuario {
+    co_usuario:string;
+    no_usuario:string;
+    ds_senha:string;
+    co_usuario_autorizacao:string;
+    nu_matricula:number;
+    dt_nascimento:Date;
+    dt_admissao_empresa:Date;
+    dt_desligamento:Date;
+    dt_inclusao:Date;
+    dt_expiracao:Date;
+    nu_cpf:string;
+    nu_rg:string;
+    no_orgao_emissor:string;
+    uf_orgao_emissor:string;
+    ds_endereco:string;
+    no_email:string;
+    no_email_pessoal:string;
+    nu_telefone:string;
+    dt_alteracao:Date;
+    url_foto:string;
+    instant_messenger:string;
+    icq:number
+    msn:string;
+    yms:string;
+    ds_comp_end:string;
+    ds_bairro:string;
+    nu_cep:string;
+    no_cidade:string;
+    uf_cidade:string;
+    dt_expedicao:Date;
+}

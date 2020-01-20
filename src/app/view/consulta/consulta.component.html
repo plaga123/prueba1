@@ -1,0 +1,227 @@
+
+
+<br>
+
+<div class="card">
+
+  <div class="container-fluid py-2">
+
+
+
+
+<div class="form-inline">
+  <div class="form-group mb-2">
+    <label><strong>Período</strong></label>
+ 
+    
+  </div>
+  <div class="form-group mx-sm-3 mb-2">
+    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" [(ngModel)]="obj.mes1">      
+        <option value="1">Jan</option>
+        <option value="2">Fev</option>
+        <option value="3">Mar</option>
+        <option value="4">Abr</option>
+        <option value="5">Mai</option>                    
+        <option value="6">Jun</option>
+        <option value="7">Jul</option>
+        <option value="8">Set</option>
+        <option value="9">Ago</option>      
+        <option value="10">Out</option>                          
+        <option value="11">Nov</option>
+        <option value="12">Dez</option>
+    </select>
+  </div>
+
+  <div class="form-group mx-sm-3 mb-2">
+    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" [(ngModel)]="obj.year1">   
+      <option value="2003">2003</option>
+      <option value="2004">2004</option>
+      <option value="2005">2005</option>
+      <option value="2006">2006</option>
+      <option value="2007">2007</option>                      
+
+    </select>&nbsp; a
+  </div>
+
+  <div class="form-group mx-sm-3 mb-2">
+    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" [(ngModel)]="obj.mes2">
+        <option value="1">Jan</option>
+        <option value="2">Fev</option>
+        <option value="3">Mar</option>
+        <option value="4">Abr</option>
+        <option value="5">Mai</option>                    
+        <option value="6">Jun</option>
+        <option value="7">Jul</option>
+        <option value="8">Set</option>
+        <option value="9">Ago</option>      
+        <option value="10">Out</option>                          
+        <option value="11">Nov</option>
+        <option value="12">Dez</option>
+
+    </select>
+  </div>
+
+  <div class="form-group mx-sm-3 mb-2">
+    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" [(ngModel)]="obj.year2">      
+        <option value="2003">2003</option>
+        <option value="2004">2004</option>
+        <option value="2005">2005</option>
+        <option value="2006">2006</option>
+        <option value="2007">2007</option>   
+    </select>
+  </div>
+  
+</div>
+
+<h5>Consultores</h5>
+
+
+
+<div class="row">
+  <div class="col-md-5">
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th></th>   
+         
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of lstdata | paginate: { itemsPerPage: 5, currentPage: p1 ,id: 'first' }" >
+         
+          <td>{{p.no_usuario}}</td>
+          <td><button (click)="Add(p)">></button></td>
+        </tr>       
+        <pagination-controls (pageChange)="p1 = $event"  id="first"></pagination-controls>
+      </tbody>
+    </table>
+  </div>
+
+
+ <!-- Lista de Busqueda -->
+
+ <div class="col-md-5">
+  <table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th></th>
+        <th></th>
+       
+       
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pp of lstBusqueda | paginate: { itemsPerPage: 5, currentPage: p2 ,id: 'first1' }" >
+       
+        <td>{{pp.no_usuario}}</td>
+        <td><button (click)="Delete(pp)">x</button></td>
+      </tr>       
+      <pagination-controls (pageChange)="p2 = $event"  id="first1"></pagination-controls>
+    </tbody>
+  </table>
+</div>
+
+<div class="col-md-2">
+  <div class="card">
+  <div class="container py-2">
+      <div class="row">
+        <div class="col">
+          <button (click)="ListarRelatorio()">Relatorio</button>&nbsp;
+          <button (click)="grafico()">Grafico</button>&nbsp;
+          <button (click)="Pizza()">Pizza</button>&nbsp;
+        </div>
+      </div>
+      </div>
+  </div>
+ 
+</div>
+
+
+</div>
+
+
+
+<div *ngFor="let bb of lstBusqueda">
+
+
+
+<h6>{{bb.no_usuario}}</h6>
+
+
+<table class="table table-sm">
+  <thead>
+    <tr>    
+      <th scope="col">Período</th>
+      <th scope="col">Receita Líquida</th>
+      <th scope="col">Custo Fixo</th>
+      <th scope="col">Comissão</th>
+      <th scope="col">Lucro</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of lstRsul">    
+    
+        <td *ngIf="r.co_usuario == bb.co_usuario">{{r.fecha}}</td>
+        <td *ngIf="r.co_usuario == bb.co_usuario">{{r.Ganancias_Netas | number}}</td>
+        <td *ngIf="r.co_usuario == bb.co_usuario">{{r.Costo_Fijo | number}}</td>
+        <td *ngIf="r.co_usuario == bb.co_usuario">{{r.comision | number}}</td>
+        <td style="color: red;"  *ngIf="r.co_usuario == bb.co_usuario">{{r.Ganancias_Netas - r.Costo_Fijo + r.comision | number}}</td>
+   
+    
+    </tr>    
+  </tbody>
+</table>
+
+<table class="table table-sm">
+  <thead>
+    <tr>    
+      <th scope="col">Saldo</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>    
+    
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        
+    
+    </tr>    
+  </tbody>
+</table>
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+</div>
+
+<div class="container">
+  <div id="container1" style="width:100%;"></div>
+</div>
+
+
+
+<div class="container">
+  <div id="container2" style="width:100%;"></div>
+</div>
+
