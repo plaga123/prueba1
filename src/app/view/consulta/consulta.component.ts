@@ -27,7 +27,8 @@ export class ConsultaComponent implements OnInit {
   lstdata:CaoUsuario[];
   lstBusqueda:CaoUsuario[]=[];
   lstRsul:any[];
-
+  p1:any=0;
+  p2:any=0;
   
 
 
@@ -97,9 +98,10 @@ export class ConsultaComponent implements OnInit {
 
   }
 
-  grafico(){  
-    
+  grafico(){     
     this.obj.user=[]; 
+    this.options.xAxis.categories =[];                       
+    this.options.series[0].data =[];
     this.lstBusqueda.forEach(element => {
     this.obj.user.push(element.co_usuario);
    });  
@@ -122,26 +124,24 @@ export class ConsultaComponent implements OnInit {
    }else{
      alert('Debe Seleccionar al menos 1 consultor');
    }
-    
-
   }
 
   Pizza(){
     this.obj.user=[]; 
+    this.graf2.series[0].data=[];         
     this.lstBusqueda.forEach(element => {
     this.obj.user.push(element.co_usuario);
    });  
 
    if(this.obj.user.length>0){
-    this.ServicesUsuario.Grafico(this.obj).subscribe((data:any[]) =>{       
-        
+    this.ServicesUsuario.Grafico(this.obj).subscribe((data:any[]) =>{             
       for (let i = 0; i < data.length; i++) {
         this.graf2.series[0].data.push({name:data[i].no_usuario,y:data[i].ganancias});  
            
       }           
     this.graf2.title.text ='Participacao...';    
     Highcharts.chart('container2', this.graf2);
-
+      console.log('asdasd');
   },(err)=>{
     console.log(err);
   });
