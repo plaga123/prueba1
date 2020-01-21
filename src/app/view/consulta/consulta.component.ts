@@ -27,6 +27,7 @@ export class ConsultaComponent implements OnInit {
   lstdata:CaoUsuario[];
   lstBusqueda:CaoUsuario[]=[];
   lstRsul:any[];
+  lstTotal:any[];
   p1:any=0;
   p2:any=0;
   
@@ -87,6 +88,8 @@ export class ConsultaComponent implements OnInit {
    if(this.obj.user.length>0){
     this.ServicesUsuario.ListarRelatorio(this.obj).subscribe((data:any[]) =>{
       this.lstRsul = data;
+      this.Total();
+      
     },(err)=>{
       console.log(err);
     });
@@ -98,7 +101,21 @@ export class ConsultaComponent implements OnInit {
 
   }
 
-  grafico(){     
+  Total(){
+    this.lstTotal=[];
+    this.ServicesUsuario
+    this.ServicesUsuario.Total(this.obj).subscribe((data:any[]) =>{
+      this.lstTotal = data;   
+    
+    },(err)=>{
+      console.log(err);
+    });
+  }
+
+  grafico(){  
+    let costo=0;
+    let per=0;   
+    let total=0;
     this.obj.user=[]; 
     this.options.xAxis.categories =[];                       
     this.options.series[0].data =[];
@@ -107,14 +124,23 @@ export class ConsultaComponent implements OnInit {
    });  
 
    if(this.obj.user.length>0){
-    this.ServicesUsuario.Grafico(this.obj).subscribe((data:any[]) =>{       
+    this.ServicesUsuario.Grafico(this.obj).subscribe((data:any[]) =>{    
+      
         
       for (let i = 0; i < data.length; i++) {
         this.options.xAxis.categories.push(data[i].fecha);                       
-        this.options.series[0].data.push({name:data[i].no_usuario,y:data[i].ganancias});             
-           
-      }           
-    this.options.title.text ='Performance Comerc...';    
+        this.options.series[0].data.push({name:data[i].no_usuario,y:data[i].ganancias});   
+        costo=data[i].Costo_Fijo;   
+        per=per+1;
+      }       
+      total = costo/per;
+      for (let index = 0; index < per; index++) {
+        this.options.series[1].data.push({y:total});                     
+        
+      }
+      
+      this.options.title.text ='Performance Comerc...';    
+  
     Highcharts.chart('container1', this.options);
 
   },(err)=>{
@@ -141,7 +167,7 @@ export class ConsultaComponent implements OnInit {
       }           
     this.graf2.title.text ='Participacao...';    
     Highcharts.chart('container2', this.graf2);
-      console.log('asdasd');
+     
   },(err)=>{
     console.log(err);
   });
@@ -190,7 +216,12 @@ export class ConsultaComponent implements OnInit {
   series: [{
       name: '',
       data: []
-  }]
+  },{
+    type: 'spline',
+    name: 'Custo Fixo',
+    data: []
+  }
+]
 };
 
 

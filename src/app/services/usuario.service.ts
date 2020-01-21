@@ -21,6 +21,11 @@ export class UsuarioService {
     return this.http.post(this.APIUrl + 'relatorio',obj, {headers:headers});   
   }
 
+  Total(obj){
+    const headers = new HttpHeaders({'Content-Type':'application/json'});           
+    return this.http.post(this.APIUrl + 'total',obj, {headers:headers});   
+  }
+
 
   Grafico(obj){
     const headers = new HttpHeaders({'Content-Type':'application/json'});           
