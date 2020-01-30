@@ -87,6 +87,8 @@ export class ConsultaComponent implements OnInit {
 
    if(this.obj.user.length>0){
     this.ServicesUsuario.ListarRelatorio(this.obj).subscribe((data:any[]) =>{
+
+      console.log(this.obj);
       this.lstRsul = data;
       this.Total();
       
@@ -117,15 +119,20 @@ export class ConsultaComponent implements OnInit {
     let per=0;   
     let total=0;
     this.obj.user=[]; 
-    this.options.xAxis.categories =[];                       
-    this.options.series[0].data =[];
+    this.options.xAxis.categories =[];    
+    this.options.series[0].data=[];
+    this.options.series[1].data=[];
+
+  
+    
     this.lstBusqueda.forEach(element => {
-    this.obj.user.push(element.co_usuario);
+      this.obj.user.push(element.co_usuario);
+     
    });  
+   
 
    if(this.obj.user.length>0){
-    this.ServicesUsuario.Grafico(this.obj).subscribe((data:any[]) =>{    
-      
+    this.ServicesUsuario.Grafico(this.obj).subscribe((data:any[]) =>{         
         
       for (let i = 0; i < data.length; i++) {
         this.options.xAxis.categories.push(data[i].fecha);                       
@@ -134,11 +141,12 @@ export class ConsultaComponent implements OnInit {
         per=per+1;
       }       
       total = costo/per;
+
       for (let index = 0; index < per; index++) {
-        this.options.series[1].data.push({y:total});                     
+       this.options.series[1].data.push({y:3200});                     
         
-      }
-      
+      }      
+
       this.options.title.text ='Performance Comerc...';    
   
     Highcharts.chart('container1', this.options);
@@ -160,7 +168,8 @@ export class ConsultaComponent implements OnInit {
    });  
 
    if(this.obj.user.length>0){
-    this.ServicesUsuario.Grafico(this.obj).subscribe((data:any[]) =>{             
+    this.ServicesUsuario.Pizza(this.obj).subscribe((data:any[]) =>{ 
+      console.log(data);        
       for (let i = 0; i < data.length; i++) {
         this.graf2.series[0].data.push({name:data[i].no_usuario,y:data[i].ganancias});  
            
@@ -245,7 +254,8 @@ plotOptions: {
         dataLabels: {
             enabled: true,
             format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-        }
+        },
+        showInLegend: true
     }
 },
 series: [{
@@ -257,8 +267,18 @@ series: [{
     }]
 }]
   }
+  
+
+
+
+
+
    
 }
+
+
+
+
 
 
 

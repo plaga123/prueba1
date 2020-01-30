@@ -32,6 +32,11 @@ export class UsuarioService {
     return this.http.post(this.APIUrl + 'grafico',obj, {headers:headers});   
   }
 
+  Pizza(obj){
+    const headers = new HttpHeaders({'Content-Type':'application/json'});           
+    return this.http.post(this.APIUrl + 'pizza',obj, {headers:headers});   
+  }
+
   Series(obj){
     const headers = new HttpHeaders({'Content-Type':'application/json'});           
     return this.http.post(this.APIUrl + 'series',obj, {headers:headers});   
